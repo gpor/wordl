@@ -1,0 +1,5 @@
+@use '../project-no-select/colors.scss' as *;
+
+body {
+    @include background-color;
+}

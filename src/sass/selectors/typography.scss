@@ -1,0 +1,19 @@
+@use '../agnostic/typography.scss' as *;
+@use '../project-no-select/typography.scss' as *;
+
+body {
+    h1 {
+        @include h1;
+    }
+    h2 {
+        @include h2;
+    }
+    h3 {
+        @include h3;
+    }
+    &, p {
+        @include p;
+    }
+}
+
+

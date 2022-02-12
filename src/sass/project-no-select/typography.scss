@@ -1,0 +1,41 @@
+@use '../agnostic/typography.scss' as *;
+@use '../project-no-select/colors.scss' as *;
+// @forward '../agnostic/typography.scss';
+
+@mixin text-color-1 {
+    color: $text-1-themedark;
+    @include light-theme {
+        color: $text-1-themelight;
+    }
+}
+@mixin font-weight {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    strong {
+        font-weight: 600;
+    }
+}
+
+
+@mixin h1 {
+    @include clamp(32, 50);
+    @include text-color-1;
+    @include font-weight;
+    margin: 0 0 10px;
+}
+@mixin h2 {
+    @include clamp(22, 36);
+    @include text-color-1;
+    @include font-weight;
+}
+@mixin h3 {
+    @include clamp(18, 25);
+    @include text-color-1;
+    @include font-weight;
+}
+@mixin p {
+    @include clamp(14, 18);
+    @include text-color-1;
+    @include font-weight;
+}
+

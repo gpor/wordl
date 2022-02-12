@@ -1,0 +1,34 @@
+
+@mixin light-theme {
+    /* enable light theme by changing to 'prefers-color-scheme: light' */
+    @media (prefers-color-scheme: light) {
+        @content;
+    }
+}
+
+$bg-themedark: #333;
+$bg-themelight: #fff;
+
+$green: #288;
+$yellow: #961;
+
+$text-1-themedark: #fff;
+$text-1-themelight: #222;
+
+$input-border-color-themedark: #555;
+$input-border-color-themelight: #ccc;
+
+@mixin input-border($thickness: 3px) {
+    border: $thickness solid $input-border-color-themedark;
+    @include light-theme {
+        border-color: $input-border-color-themelight;
+    }
+}
+
+@mixin background-color {
+    background-color: $bg-themedark;
+    @include light-theme {
+        background-color: $bg-themelight;
+    }
+}
+

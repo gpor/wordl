@@ -1,0 +1,17 @@
+@use '../agnostic/page-layout.scss' as agnostic;
+@use '../project-no-select/page-layout.scss' as *;
+
+html, body {
+    @include agnostic.full-page-height;
+}
+
+
+.center-box {
+    @include agnostic.full-page-height;
+    @include agnostic.center-xy;
+    .-box {
+        @include page-center-box;
+    }
+}
+
+

@@ -1,0 +1,21 @@
+@use '../project-no-select/board.scss' as *;
+@use '../agnostic/typography.scss' as *;
+
+.board {
+    h1 {
+        @include clamp(15, 30, 'margin-bottom');
+    }
+    .-rows {
+        display: flex;
+        flex-direction: column;
+        gap: $board-gaps;
+        .word-row {
+            display: flex;
+            gap: $board-gaps;
+            .input-box {
+                @include input-box;
+            }
+        }
+    }
+}
+

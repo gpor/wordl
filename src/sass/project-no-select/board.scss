@@ -1,0 +1,28 @@
+@use '../agnostic/page-layout.scss' as *;
+@use '../agnostic/typography.scss' as *;
+@use './colors.scss' as *;
+
+$board-gaps: clamp(8px, 3vw, 12px);
+
+@mixin input-box-border {
+    @include input-border;
+}
+
+@mixin input-box-size {
+    @include clamp(30, 60, height);
+    flex: 0 1 auto;
+    width: 100%;
+}
+
+@mixin input-box {
+    @include input-box-border;
+    @include input-box-size;
+    @include center-xy;
+    > :first-child {
+        @include clamp(16, 40);
+        @include clamp(1, 3, 'bottom');
+        text-transform: uppercase;
+        margin: 0;
+        position: relative;
+    }
+}

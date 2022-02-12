@@ -1,0 +1,19 @@
+@use 'sass:math';
+
+
+$inputs: '[type='text'], [type='password'], [type='date'], [type='datetime'], [type='datetime-local'], [type='month'], [type='week'], [type='email'], [type='number'], [type='search'], [type='tel'], [type='time'], [type='url'], [type='phone'], [type='color'], select, textarea';
+$text-els: 'h1, h2, h3, h4, h5, p, li, td, th';
+$p-els: 'p, li, td';
+
+
+@mixin clamp($sml, $full, $propName: "font-size") {
+    #{$propName}: #{(math.div($full, 4))}vw;
+    #{$propName}: clamp(#{$sml}px, #{(math.div($full, 4))}vw, #{$full}px);
+}
+
+
+@mixin truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
