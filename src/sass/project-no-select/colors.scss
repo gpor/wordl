@@ -1,7 +1,7 @@
 
 @mixin light-theme {
     /* enable light theme by changing to 'prefers-color-scheme: light' */
-    @media (prefers-color-scheme: light) {
+    @media (prefers-color-scheme: light-foo) {
         @content;
     }
 }
@@ -10,13 +10,16 @@ $bg-themedark: #333;
 $bg-themelight: #fff;
 
 $green: #288;
-$yellow: #961;
+$yellow: #b07716;
+$box-grey: #aaa;
 
 $text-1-themedark: #fff;
 $text-1-themelight: #222;
 
 $input-border-color-themedark: #555;
 $input-border-color-themelight: #ccc;
+$input-border-color-focus-themedark: #999;
+$input-border-color-focus-themelight: #777;
 
 @mixin input-border($thickness: 3px) {
     border: $thickness solid $input-border-color-themedark;
