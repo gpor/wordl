@@ -1,9 +1,13 @@
 @use '../agnostic/page-layout.scss' as *;
+@use 'sass:math';
 
+
+@mixin clamp($sml, $full, $propName: "font-size") {
+    #{$propName}: clamp(#{$sml}px, #{(math.div($full, 5))}vw, #{$full}px);
+}
 
 @mixin page-center-box {
-    width: 86%;
-    max-width: 400px;
+    @include clamp(10, 400, 'width');
     text-align: center;
     padding-bottom: 10vmin;
 }

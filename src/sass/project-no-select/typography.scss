@@ -1,4 +1,5 @@
 @use '../agnostic/typography.scss' as *;
+@use '../project-no-select/page-layout.scss' as *;
 @use '../project-no-select/colors.scss' as *;
 // @forward '../agnostic/typography.scss';
 
@@ -18,24 +19,28 @@
 
 
 @mixin h1 {
-    @include clamp(32, 50);
+    @include clamp(32, 60);
+    @include clamp(2, 4, 'letter-spacing');
     @include text-color-1;
     @include font-weight;
-    margin: 0 0 10px;
+    margin: 0 0 20px;
 }
 @mixin h2 {
     @include clamp(22, 36);
     @include text-color-1;
     @include font-weight;
+    margin: 0 0 14px;
 }
 @mixin h3 {
     @include clamp(18, 25);
     @include text-color-1;
     @include font-weight;
+    margin: 0 0 10px;
 }
 @mixin p {
     @include clamp(14, 18);
     @include text-color-1;
     @include font-weight;
+    margin: 0 0 4px;
 }
 

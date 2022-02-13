@@ -1,5 +1,6 @@
 @use '../agnostic/page-layout.scss' as *;
 @use '../agnostic/typography.scss' as *;
+@use './page-layout.scss' as *;
 @use './colors.scss' as *;
 
 $board-gaps: clamp(8px, 3vw, 12px);

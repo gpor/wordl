@@ -1,9 +1,10 @@
+@use '../project-no-select/page-layout.scss' as *;
 @use '../project-no-select/board.scss' as *;
 @use '../agnostic/typography.scss' as *;
 
 .board {
     h1 {
-        @include clamp(15, 30, 'margin-bottom');
+        @include clamp(25, 50, 'margin-bottom');
     }
     .-rows {
         display: flex;

@@ -1,0 +1,7 @@
+@use 'sass:math';
+
+
+@mixin clamp($sml, $full, $propName: "font-size") {
+    #{$propName}: #{(math.div($full, 12))}vw;
+    #{$propName}: clamp(#{$sml}px, #{(math.div($full, 12))}vw, #{$full}px);
+}
