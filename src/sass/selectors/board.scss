@@ -3,6 +3,7 @@
 @use '../agnostic/typography.scss' as *;
 
 .board {
+    outline: none !important;
     h1 {
         @include clamp(25, 50, 'margin-bottom');
     }
