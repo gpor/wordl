@@ -1,11 +1,13 @@
-import {TargetWord} from '../lib/words.js'
+// import {TargetWord} from '../lib/words.js'
 import {newWordRows, nAcross, nDown} from '../lib/board.js'
-import {useState, useRef, useEffect} from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import WordRow from '../components/WordRow.jsx'
 
+import WordContext from '../context/word/WordContext.js'
+
 function Board() {
-  
-  const [targetWord, setTargetWord] = useState(new TargetWord)
+  const { targetWord } = useContext(WordContext)
+  // const [targetWord, setTargetWord] = useState(new TargetWord)
   const [wordRows, setWordRows] = useState(newWordRows(targetWord))
   const [currentY, setCurrentY] = useState(0)
   const [currentX, setCurrentX] = useState(0)
