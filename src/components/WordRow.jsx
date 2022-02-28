@@ -1,12 +1,11 @@
 import InputBox from './InputBox.jsx'
 import PropTypes from 'prop-types';
 
-function WordRow({row, currentY, currentX, clickRowBox}) {
-  
-  const clickBox = (box) => {
-    console.log('row', row.i, 'box', box.i);
-    clickRowBox(row, box)
-  }
+function WordRow({row, currentY, currentX}) {
+  // const clickBox = (box) => {
+  //   console.log('row', row.i, 'box', box.i);
+  //   clickRowBox(row, box)
+  // }
 
   return (
     <div className="word-row">
@@ -15,7 +14,6 @@ function WordRow({row, currentY, currentX, clickRowBox}) {
           key={box.i}
           box={box}
           currentX={currentY === row.i ? currentX : null}
-          clickBox={clickBox}
         />
       ))}
     </div>
@@ -26,7 +24,7 @@ WordRow.propTypes = {
   row: PropTypes.object.isRequired,
   currentY: PropTypes.number.isRequired,
   currentX: PropTypes.number.isRequired,
-  clickRowBox: PropTypes.func,
+  // clickRowBox: PropTypes.func,
 }
 
 

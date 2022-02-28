@@ -1,23 +1,15 @@
-// import {TargetWord} from '../lib/words.js'
-import {newWordRows, nAcross, nDown} from '../lib/board.js'
-import { useState, useRef, useEffect, useContext } from 'react'
+import { nAcross, nDown } from '../lib/board.js'
+import { useRef, useEffect, useContext } from 'react'
 import WordRow from '../components/WordRow.jsx'
-
 import WordContext from '../context/word/WordContext.js'
 
 function Board() {
-  const { targetWord } = useContext(WordContext)
-  // const [targetWord, setTargetWord] = useState(new TargetWord)
-  const [wordRows, setWordRows] = useState(newWordRows(targetWord))
-  const [currentY, setCurrentY] = useState(0)
-  const [currentX, setCurrentX] = useState(0)
+  const { targetWord, wordRows, currentY, setCurrentY,  currentX, setCurrentX } = useContext(WordContext)
   
   const boardRef = useRef()
-  
   useEffect(()=>{
     boardRef.current.focus()
   })
-  
   const keyDown = (e) => {
     const wordRow = wordRows.find(wordRow => wordRow.i === currentY);
     const box = wordRow.boxes.find(box => box.i === currentX);
@@ -46,6 +38,8 @@ function Board() {
           wordRow.showResult(check.result)
           if (check.win) {
             /* todo */
+            setCurrentY(7)
+            setCurrentX(6)
           }
         } else {
           return 4
@@ -53,7 +47,7 @@ function Board() {
         if (currentY < nDown - 1) {
           setCurrentY(currentY => currentY + 1)
         }
-        return 0; 
+        return 0;
       }
       return nextX
     })
