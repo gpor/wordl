@@ -6,6 +6,7 @@
     outline: none !important;
     h1 {
         @include clamp(25, 50, 'margin-bottom');
+        @include clamp(20, 40, 'margin-top');
     }
     .-rows {
         display: flex;

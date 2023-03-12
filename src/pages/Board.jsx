@@ -4,35 +4,42 @@ import WordRow from '../components/WordRow.jsx'
 import WordContext from '../context/word/WordContext.js'
 
 function Board() {
-  const { targetWord, wordRows, currentY, setCurrentY,  currentX, setCurrentX } = useContext(WordContext)
+  const {
+    keyboard,
+    targetWord,
+    wordRows,
+    currentX,
+    currentY,
+    setCurrentX,
+    setCurrentY,
+  } = useContext(WordContext)
   
   const boardRef = useRef()
   useEffect(()=>{
     boardRef.current.focus()
   })
-  const keyDown = (e) => {
+  const keyClick = (value) => {
     const wordRow = wordRows.find(wordRow => wordRow.i === currentY);
     const box = wordRow.boxes.find(box => box.i === currentX);
-    if (e.key === 'Backspace') {
+    if (value === 'delete') {
       setCurrentX(currentX => {
         return (currentX > 0)
           ? currentX - 1
           : 0
       })
-      box.val = ''
+      if (currentX < 5) {
+        box.val = ''
+      }
+      if (currentX > 0) wordRow.boxes[currentX - 1].val = '|'
       return
     }
-    if (e.keyCode < 65 || e.keyCode > 90 || e.ctrlKey || e.metaKey) {
-      return false
+    if (value !== 'enter' && value !== 'delete') {
+      box.val = value
     }
-    box.val = e.key.toUpperCase();
-    // setWordRows((wordRows) => {
-    //   return wordRows
-    // })
-    setCurrentX(currentX => {
-      let nextX = currentX + 1;
-      if (nextX === nAcross) {
-        const check = targetWord.evaluate(wordRow.str());
+ 
+    if (value === 'enter') {
+      if (currentX === nAcross){
+        const check = targetWord.evaluate(wordRow.str())
         console.log('check ******', check)
         if (check.inWordList) {
           wordRow.showResult(check.result)
@@ -40,47 +47,72 @@ function Board() {
             /* todo */
             setCurrentY(7)
             setCurrentX(6)
+          } else { // valid word, not the key word
+            setCurrentY(currentY => currentY + 1)
+            setCurrentX(0)
           }
         } else {
-          return 4
+          //add shake to row
+          console.log('At end of row and clicked enter')
+          setCurrentX(4) // not a valid word, send cursor to end of row
         }
-        if (currentY < nDown - 1) {
-          setCurrentY(currentY => currentY + 1)
-        }
-        return 0;
+      } else {
+        //add shake to row
+        console.log('Not at end of row and clicked enter')
       }
-      return nextX
-    })
+    } else {
+      setCurrentX(currentX => {
+        return currentX + 1
+      })
+    }
   }
-  
-  const clickRowBox = (row, box) => {
-    console.log('row', row.i, 'box', box.i);
-    setCurrentY(row.i)
-    setCurrentX(box.i)
-  }
+  // // Not sure what this does
+  // const clickRowBox = (row, box) => {
+  //   console.log('row', row.i, 'box', box.i);
+  //   setCurrentY(row.i)
+  //   setCurrentX(box.i)
+  // }
 
   return (
-    <div
-      className="board center-box"
-      tabIndex="0"
-      onKeyDown={keyDown}
-      ref={boardRef}
-    >
-      <div className="-box">
-        <h1>WORDL</h1>
-        <div className="-rows">
-          {wordRows.map((row) => (
-            <WordRow
-              key={row.i}
-              row={row}
-              currentY={currentY}
-              currentX={currentX}
-              clickRowBox={clickRowBox}
-            />
-          ))}
+    <>
+      <div
+        className="board center-box"
+        ref={boardRef}
+      >
+        <div className="-box">
+          <h1>WORDL</h1>
+          <div className="-rows">
+            {wordRows.map((row) => (
+              <WordRow
+                key={row.i}
+                row={row}
+                currentY={currentY}
+                currentX={currentX}
+                // clickRowBox={clickRowBox}
+              /> 
+            ))}
+          </div>
         </div>
+        <section
+          className="keyboard"
+        >
+          {Object.entries(keyboard).map((row, i) => (
+            <ul key={i} className={row[0]}>
+              {
+                row[1].map((keyName, i) => (
+                  <li key={i} className={keyName}>
+                    <button
+                      tabIndex="0"
+                      onClick={() => keyClick(keyName)}
+                    >{keyName}</button>
+                  </li>
+                ))
+              }
+            </ul>
+          ))}
+        </section>
       </div>
-    </div>
+    </>
   )
 }
 
