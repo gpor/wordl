@@ -21,7 +21,6 @@
     li {
       width: 50%;
       button {
-        // @include key-bg($box-grey);
         border: none;
         height: 60px;
         border-radius: 4px;
@@ -37,6 +36,9 @@
         }
         &.-grey {
           @include key-bg($box-grey);
+        }
+        &:disabled {
+          cursor: not-allowed;
         }
       }
       &.delete,

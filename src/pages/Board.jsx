@@ -5,74 +5,88 @@ import WordContext from '../context/word/WordContext.js'
 
 function Board() {
   const {
-    keyboard,
-    targetWord,
-    wordRows,
-    currentX,
-    currentY,
-    setCurrentX,
-    setCurrentY,
-  } = useContext(WordContext)
-  
-  const boardRef = useRef()
-  useEffect(()=>{
-    boardRef.current.focus()
-  })
-  const keyClick = (value) => {
-    const wordRow = wordRows.find(wordRow => wordRow.i === currentY);
-    const box = wordRow.boxes.find(box => box.i === currentX);
-    if (value === 'delete') {
-      setCurrentX(currentX => {
-        return (currentX > 0)
-          ? currentX - 1
-          : 0
-      })
-      if (currentX < 5) {
-        box.val = ''
+      keyboard,
+      targetWord,
+      wordRows,
+      currentX,
+      currentY,
+      setCurrentX,
+      setCurrentY,
+      letterChoices,
+      setLetterChoices,
+      disableKeys,
+      setDisableKeys,
+
+    } = useContext(WordContext),
+    boardRef = useRef(),
+    keyClick = (value) => {
+      const wordRow = wordRows.find(wordRow => wordRow.i === currentY);
+      const box = wordRow.boxes.find(box => box.i === currentX);
+      if (value === 'delete') {
+        setCurrentX(currentX => {
+          return (currentX > 0)
+            ? currentX - 1
+            : 0
+        })
+        if (currentX < 5) {
+          box.val = ''
+        }
+        if (currentX > 0) wordRow.boxes[currentX - 1].val = '|'
+        return
       }
-      if (currentX > 0) wordRow.boxes[currentX - 1].val = '|'
-      return
-    }
-    if (value !== 'enter' && value !== 'delete') {
-      box.val = value
-    }
- 
-    if (value === 'enter') {
-      if (currentX === nAcross){
-        const check = targetWord.evaluate(wordRow.str())
-        console.log('check ******', check)
-        if (check.inWordList) {
-          wordRow.showResult(check.result)
-          if (check.win) {
+      if (value !== 'enter' && value !== 'delete') {
+        box.val = value
+      }
+      if (value === 'enter') {
+        if (currentX === nAcross){
+          const check = targetWord.evaluate(wordRow.str())
+          console.log('check ******', check)
+          if (check.inWordList) {
+            wordRow.showResult(check.result)
+            if (check.win) {
             /* todo */
-            setCurrentY(7)
-            setCurrentX(6)
-          } else { // valid word, not the key word
+              setCurrentY(7)
+              setCurrentX(6)
+              setDisableKeys(true)
+            }
+            // valid word, not the key word
+            // Add the letter val and css class values to the letterChoice Array
+            const usersSelectedLetters = wordRows[currentY].boxes.map(box => ({resultClass: box.resultClass, val: box.val}))
+            setLetterChoices(currentLetterChoices => (
+              [
+                ...currentLetterChoices,
+                ...usersSelectedLetters,
+              ]
+            ))
             setCurrentY(currentY => currentY + 1)
             setCurrentX(0)
+          } else {
+            //add shake to row
+            console.log('At end of row and clicked enter')
+            setCurrentX(4) // not a valid word, send cursor to end of row
           }
         } else {
           //add shake to row
-          console.log('At end of row and clicked enter')
-          setCurrentX(4) // not a valid word, send cursor to end of row
+          console.log('Not at end of row and clicked enter')
         }
       } else {
-        //add shake to row
-        console.log('Not at end of row and clicked enter')
+        setCurrentX(currentX => {
+          return currentX + 1
+        })
       }
-    } else {
-      setCurrentX(currentX => {
-        return currentX + 1
+    },
+    getKeyResultClass = (keyName) => {
+      let className = ''
+      letterChoices.forEach(letterChoice => {
+        if (letterChoice.val === keyName) {
+          className = letterChoice.resultClass
+        }
       })
+      return className
     }
-  }
-  // // Not sure what this does
-  // const clickRowBox = (row, box) => {
-  //   console.log('row', row.i, 'box', box.i);
-  //   setCurrentY(row.i)
-  //   setCurrentX(box.i)
-  // }
-
+  useEffect(()=>{
+    boardRef.current.focus()
+  })
   return (
     <>
       <div
@@ -88,7 +102,6 @@ function Board() {
                 row={row}
                 currentY={currentY}
                 currentX={currentX}
-                // clickRowBox={clickRowBox}
               /> 
             ))}
           </div>
@@ -104,6 +117,8 @@ function Board() {
                     <button
                       tabIndex="0"
                       onClick={() => keyClick(keyName)}
+                      className={getKeyResultClass(keyName)}
+                      disabled={disableKeys}
                     >{keyName}</button>
                   </li>
                 ))
