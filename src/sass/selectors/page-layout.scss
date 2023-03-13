@@ -10,12 +10,11 @@ html, body {
     flex-direction: column;
 }
 .center-box {
-    // @include agnostic.full-page-height;
     @include page-center-box;
     @include agnostic.center-xy;
     flex-direction: column;
     .-box {
-        @include clamp(35, 50, 'margin-bottom');
+        @include clamp(35, 70, 'margin-bottom');
         width: calc(100% - 200px);
     }
 }

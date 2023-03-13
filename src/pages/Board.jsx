@@ -8,6 +8,7 @@ function Board() {
       keyboard,
       targetWord,
       wordRows,
+      setWordRows,
       currentX,
       currentY,
       setCurrentX,
@@ -38,16 +39,16 @@ function Board() {
         box.val = value
       }
       if (value === 'enter') {
-        if (currentX === nAcross){
+        if (currentX === nAcross) {
           const check = targetWord.evaluate(wordRow.str())
-          console.log('check ******', check)
+          // console.log('check ******', check)
           if (check.inWordList) {
             wordRow.showResult(check.result)
             if (check.win) {
-            /* todo */
               setCurrentY(7)
               setCurrentX(6)
               setDisableKeys(true)
+              //ToDo: show win toast
             }
             // valid word, not the key word
             // Add the letter val and css class values to the letterChoice Array
@@ -61,12 +62,18 @@ function Board() {
             setCurrentY(currentY => currentY + 1)
             setCurrentX(0)
           } else {
-            //add shake to row
+            shakeRow()
             console.log('At end of row and clicked enter')
             setCurrentX(4) // not a valid word, send cursor to end of row
+            alert('That word is not in the list...') // todo: add an toast
+          }
+          //ToDo: check for last row (currentY) and show the wordle, show user lost toast
+          console.log({currentY,nDown})
+          if (currentY === nDown - 1) {
+            // alert('You lose looser!')
           }
         } else {
-          //add shake to row
+          shakeRow()
           console.log('Not at end of row and clicked enter')
         }
       } else {
@@ -74,6 +81,22 @@ function Board() {
           return currentX + 1
         })
       }
+    },
+    shakeRow = () =>{
+      setWordRows(currentWordRows => {
+        currentWordRows[currentY].rowClass = 'shake'
+        return [
+          ...currentWordRows,
+        ]
+      })
+      setTimeout(()=>{
+        setWordRows(currentWordRows => {
+          currentWordRows[currentY].rowClass = ''
+          return [
+            ...currentWordRows,
+          ]
+        })
+      }, 900)
     },
     getKeyResultClass = (keyName) => {
       let className = ''
@@ -96,33 +119,29 @@ function Board() {
         <div className="-box">
           <h1>WORDL</h1>
           <div className="-rows">
-            {wordRows.map((row) => (
+            {wordRows.map((row, index) => (
               <WordRow
                 key={row.i}
                 row={row}
                 currentY={currentY}
                 currentX={currentX}
-              /> 
+              />
             ))}
           </div>
         </div>
-        <section
-          className="keyboard"
-        >
+        <section className="keyboard">
           {Object.entries(keyboard).map((row, i) => (
             <ul key={i} className={row[0]}>
-              {
-                row[1].map((keyName, i) => (
-                  <li key={i} className={keyName}>
-                    <button
-                      tabIndex="0"
-                      onClick={() => keyClick(keyName)}
-                      className={getKeyResultClass(keyName)}
-                      disabled={disableKeys}
-                    >{keyName}</button>
-                  </li>
-                ))
-              }
+              {row[1].map((keyName, i) => (
+                <li key={i} className={keyName}>
+                  <button
+                    tabIndex="0"
+                    onClick={() => keyClick(keyName)}
+                    className={getKeyResultClass(keyName)}
+                    disabled={disableKeys}
+                  >{keyName}</button>
+                </li>
+              ))}
             </ul>
           ))}
         </section>

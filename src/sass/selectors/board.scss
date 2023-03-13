@@ -1,5 +1,6 @@
 @use '../project-no-select/page-layout.scss' as *;
 @use '../project-no-select/board.scss' as *;
+@use '../agnostic/transitions.scss' as *;
 @use '../agnostic/typography.scss' as *;
 
 .board {
@@ -15,8 +16,14 @@
         .word-row {
             display: flex;
             gap: $board-gaps;
+            transform-origin: 50% 50%;
             .input-box {
                 @include input-box;
+            }
+            &.shake {
+                .input-box {
+                    animation: shake-animation .5s ease infinite;
+                }
             }
         }
     }

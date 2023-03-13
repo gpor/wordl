@@ -11,7 +11,7 @@ const WordContext = createContext()
 export const WordProvider = ({children}) => {
   const [keyboard] = useState(keyboardData)
   const [targetWord] = useState(new TargetWord)
-  const [wordRows] = useState(newWordRows(targetWord))
+  const [wordRows, setWordRows] = useState(newWordRows(targetWord))
   const [currentY, setCurrentY] = useState(0)
   const [currentX, setCurrentX] = useState(0)
   
@@ -22,6 +22,7 @@ export const WordProvider = ({children}) => {
     keyboard,
     targetWord,
     wordRows,
+    setWordRows,
     currentX,
     currentY,
     setCurrentX,
@@ -30,7 +31,7 @@ export const WordProvider = ({children}) => {
     setLetterChoices,
     disableKeys,
     setDisableKeys,
-    
+
   }}>
     {children}
   </WordContext.Provider>
