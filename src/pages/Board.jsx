@@ -2,6 +2,7 @@ import { nAcross, nDown } from '../lib/board.js'
 import { useRef, useEffect, useContext } from 'react'
 import WordRow from '../components/WordRow.jsx'
 import WordContext from '../context/word/WordContext.js'
+import { toast } from 'react-toastify'
 
 function Board() {
   const {
@@ -48,7 +49,7 @@ function Board() {
               setCurrentY(7)
               setCurrentX(6)
               setDisableKeys(true)
-              //ToDo: show win toast
+              toast.success('Well done.')
             }
             // valid word, not the key word
             // Add the letter val and css class values to the letterChoice Array
@@ -65,16 +66,18 @@ function Board() {
             shakeRow()
             console.log('At end of row and clicked enter')
             setCurrentX(4) // not a valid word, send cursor to end of row
-            alert('That word is not in the list...') // todo: add an toast
+            toast.error('That word is not in the list.')
           }
-          //ToDo: check for last row (currentY) and show the wordle, show user lost toast
-          console.log({currentY,nDown})
           if (currentY === nDown - 1) {
-            // alert('You lose looser!')
+            if (!check.win) {
+              setDisableKeys(true)
+              toast.error(`Bad luck. Todays word is ${targetWord.word}.`)
+            }
           }
         } else {
           shakeRow()
           console.log('Not at end of row and clicked enter')
+          toast.error('Enter a 5 letter word.')
         }
       } else {
         setCurrentX(currentX => {
@@ -111,45 +114,41 @@ function Board() {
     boardRef.current.focus()
   })
   return (
-    <>
-      <div
-        className="board center-box"
-        ref={boardRef}
-      >
-        <div className="-box">
-          <h1>WORDL</h1>
-          <div className="-rows">
-            {wordRows.map((row, index) => (
-              <WordRow
-                key={row.i}
-                row={row}
-                currentY={currentY}
-                currentX={currentX}
-              />
-            ))}
-          </div>
-        </div>
-        <section className="keyboard">
-          {Object.entries(keyboard).map((row, i) => (
-            <ul key={i} className={row[0]}>
-              {row[1].map((keyName, i) => (
-                <li key={i} className={keyName}>
-                  <button
-                    tabIndex="0"
-                    onClick={() => keyClick(keyName)}
-                    className={getKeyResultClass(keyName)}
-                    disabled={disableKeys}
-                  >{keyName}</button>
-                </li>
-              ))}
-            </ul>
+    <div
+      className="board center-box"
+      ref={boardRef}
+    >
+      <div className="-box">
+        <h1>WORDL</h1>
+        <div className="-rows">
+          {wordRows.map((row, index) => (
+            <WordRow
+              key={row.i}
+              row={row}
+              currentY={currentY}
+              currentX={currentX}
+            />
           ))}
-        </section>
+        </div>
       </div>
-    </>
+      <section className="keyboard">
+        {Object.entries(keyboard).map((row, i) => (
+          <ul key={i} className={row[0]}>
+            {row[1].map((keyName, i) => (
+              <li key={i} className={keyName}>
+                <button
+                  tabIndex="0"
+                  onClick={() => keyClick(keyName)}
+                  className={getKeyResultClass(keyName)}
+                  disabled={disableKeys}
+                >{keyName}</button>
+              </li>
+            ))}
+          </ul>
+        ))}
+      </section>
+    </div>
   )
 }
-
-
 
 export default Board
