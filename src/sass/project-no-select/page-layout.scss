@@ -7,8 +7,7 @@
 }
 
 @mixin page-center-box {
-    @include clamp(10, 400, 'width');
+    @include clamp(10, 600, 'width');
     text-align: center;
-    padding-bottom: 10vmin;
 }
 

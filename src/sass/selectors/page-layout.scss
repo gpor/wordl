@@ -5,12 +5,17 @@ html, body {
     @include agnostic.full-page-height;
 }
 
-
-.center-box {
-    @include agnostic.full-page-height;
+#root {
     @include agnostic.center-xy;
+    flex-direction: column;
+}
+.center-box {
+    @include page-center-box;
+    @include agnostic.center-xy;
+    flex-direction: column;
     .-box {
-        @include page-center-box;
+        @include clamp(35, 70, 'margin-bottom');
+        width: calc(100% - 200px);
     }
 }
 

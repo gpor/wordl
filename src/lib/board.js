@@ -6,6 +6,7 @@ class WordRow {
     this.i = i
     this.targetWord = targetWord
     this.boxes = []
+    this.rowClass = ''
     for (let i = 0; i < nAcross; i++) {
       this.boxes.push(new Box(i, this))
     }

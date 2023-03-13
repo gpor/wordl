@@ -1,0 +1,53 @@
+@use '../agnostic/page-layout.scss' as agnostic;
+@use '../project-no-select/page-layout.scss' as *;
+@use '../agnostic/typography.scss' as *;
+@use '../project-no-select/colors.scss' as *;
+
+@mixin key-bg($color) {
+  background-color: $color;
+  border-color: $color;
+}
+
+.keyboard {
+  width: 100%;
+  ul {
+    @include agnostic.center-xy;
+    flex-wrap: nowrap;
+    gap: 10px 10px;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+    li {
+      width: 50%;
+      button {
+        border: none;
+        height: 60px;
+        border-radius: 4px;
+        width: 100%;
+        &:hover {
+          cursor: pointer;
+        }
+        &.-yellow {
+          @include key-bg($yellow);
+        }
+        &.-green {
+          @include key-bg($green);
+        }
+        &.-grey {
+          @include key-bg($box-grey);
+        }
+        &:disabled {
+          cursor: not-allowed;
+        }
+      }
+      &.delete,
+      &.enter {
+        width: 100%;
+      }
+    }
+    &.rowTwo {
+      margin: 0 20px 10px;
+    }
+  }
+}
