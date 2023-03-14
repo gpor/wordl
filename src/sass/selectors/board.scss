@@ -3,6 +3,8 @@
 @use '../agnostic/transitions.scss' as *;
 @use '../agnostic/typography.scss' as *;
 
+@use '../project-no-select/colors.scss' as *;
+
 .board {
     outline: none !important;
     h1 {
@@ -17,13 +19,84 @@
             display: flex;
             gap: $board-gaps;
             transform-origin: 50% 50%;
-            .input-box {
+            .box-container {
+                position: relative;
+                width: 100%;
+
+                height: 65px;
+            }
+            .input-box,
+            .box-backing {
                 @include input-box;
+                transform-origin: 100% center;
+                transition: transform .5s ease-in-out;
+                transform-style: preserve-3d;
+
+                height: 100%;
+                left: 0;
+
+                position: absolute;
+                top: 0;
+            }
+            .input-box {
+                background-color: #333;
+                // background-color: rgba(86, 84, 84, .25);
+                background-color: rgb(86, 84, 84);
+                opacity: 1;
+                // position: relative;
+                transform: rotateX(0deg);
+
+             }
+            .box-backing {
+                opacity: 0;
+                transform: rotateX(-180deg);
+                // left: 0;
+                // position: absolute;
+                // top: 0;
+                // z-index: 0;
             }
             &.shake {
                 .input-box {
                     animation: shake-animation .5s ease infinite;
                 }
+            }
+            &.flip {
+                .box-container {
+                    @for $i from 0 through 4 {
+                        &:nth-child(#{$i + 1}) {
+                            .box-backing {
+                                animation: .1s forwards fade-in;
+                                animation-delay: #{($i * .5) + .25}s;
+
+                                transition-delay: #{$i * .5}s;
+                                // border: 1px solid green;
+                                transform: rotateX(0deg);
+                            }
+                            .input-box {
+                                animation: .1s forwards fade-in;
+                                animation-delay: #{($i * 1) + .25}s;
+
+                                transition-delay: #{$i * .5}s;
+                                transform: rotateX(180deg);
+                            }
+                        }
+                    }
+                }
+                .box-backing {
+                    &.-yellow {
+                        @include yellow-box;
+                    }
+                    &.-green {
+                        @include green-box;
+                    }
+                    &.-grey {
+                        @include grey-box;
+                    }
+                }
+                // .input-box {
+                //     // https://codepen.io/xthecapx/pen/KzLEba
+                //     transform: rotateX(180deg);
+                // }
             }
         }
     }
