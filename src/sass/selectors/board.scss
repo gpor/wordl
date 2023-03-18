@@ -20,40 +20,29 @@
             gap: $board-gaps;
             transform-origin: 50% 50%;
             .box-container {
+                height: 70px;
                 position: relative;
                 width: 100%;
-
-                height: 65px;
             }
             .input-box,
             .box-backing {
                 @include input-box;
+                height: 100%;
+                left: 0;
+                position: absolute;
                 transform-origin: 100% center;
                 transition: transform .5s ease-in-out;
                 transform-style: preserve-3d;
-
-                height: 100%;
-                left: 0;
-
-                position: absolute;
                 top: 0;
             }
             .input-box {
-                background-color: #333;
-                // background-color: rgba(86, 84, 84, .25);
-                background-color: rgb(86, 84, 84);
+                // background-color: #565454;
                 opacity: 1;
-                // position: relative;
                 transform: rotateX(0deg);
-
              }
             .box-backing {
                 opacity: 0;
                 transform: rotateX(-180deg);
-                // left: 0;
-                // position: absolute;
-                // top: 0;
-                // z-index: 0;
             }
             &.shake {
                 .input-box {
@@ -66,17 +55,14 @@
                         &:nth-child(#{$i + 1}) {
                             .box-backing {
                                 animation: .1s forwards fade-in;
-                                animation-delay: #{($i * .5) + .25}s;
-
-                                transition-delay: #{$i * .5}s;
-                                // border: 1px solid green;
+                                animation-delay: #{($i * .4) + .2}s;
+                                transition-delay: #{$i * .4}s;
                                 transform: rotateX(0deg);
                             }
                             .input-box {
                                 animation: .1s forwards fade-in;
-                                animation-delay: #{($i * 1) + .25}s;
-
-                                transition-delay: #{$i * .5}s;
+                                animation-delay: #{($i * 1) + .2}s;
+                                transition-delay: #{$i * .4}s;
                                 transform: rotateX(180deg);
                             }
                         }
@@ -93,10 +79,6 @@
                         @include grey-box;
                     }
                 }
-                // .input-box {
-                //     // https://codepen.io/xthecapx/pen/KzLEba
-                //     transform: rotateX(180deg);
-                // }
             }
         }
     }

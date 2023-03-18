@@ -33,7 +33,7 @@ $board-gaps: clamp(8px, 3vw, 12px);
 }
 
 @mixin input-box {
-    // @include input-box-border;
+    @include input-background-color;
     @include input-box-size;
     @include center-xy;
     user-select: none;
