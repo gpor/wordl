@@ -16,6 +16,9 @@ $box-grey: #aaa;
 $text-1-themedark: #fff;
 $text-1-themelight: #222;
 
+$input-background-color-themedark: #555;
+$input-background-color-themelight: #ccc;
+
 $input-border-color-themedark: #555;
 $input-border-color-themelight: #ccc;
 $input-border-color-focus-themedark: #999;
@@ -32,6 +35,13 @@ $input-border-color-focus-themelight: #777;
     background-color: $bg-themedark;
     @include light-theme {
         background-color: $bg-themelight;
+    }
+}
+
+@mixin input-background-color {
+    background-color: $input-background-color-themedark;
+    @include light-theme {
+        background-color: $input-background-color-themelight;
     }
 }
 

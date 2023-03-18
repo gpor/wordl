@@ -33,24 +33,16 @@ $board-gaps: clamp(8px, 3vw, 12px);
 }
 
 @mixin input-box {
-    @include input-box-border;
+    @include input-background-color;
     @include input-box-size;
     @include center-xy;
     user-select: none;
+    
     > :first-child {
         @include clamp(16, 40);
         @include clamp(1, 3, 'bottom');
         margin: 0;
         position: relative;
-    }
-    &.-yellow {
-        @include yellow-box;
-    }
-    &.-green {
-        @include green-box;
-    }
-    &.-grey {
-        @include grey-box;
     }
     &.-current {
         border-color: $input-border-color-focus-themedark;

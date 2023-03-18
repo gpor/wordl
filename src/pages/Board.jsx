@@ -60,6 +60,13 @@ function Board() {
                 ...usersSelectedLetters,
               ]
             ))
+            // add flip transition to row letters
+            setWordRows(currentWordRows => {
+              currentWordRows[currentY].rowClass = 'flip'
+              return [
+                ...currentWordRows,
+              ]
+            })
             setCurrentY(currentY => currentY + 1)
             setCurrentX(0)
           } else {
